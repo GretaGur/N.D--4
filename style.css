@@ -1,0 +1,55 @@
+body {
+    margin: 10px;
+}
+img {
+    width: 100%;
+}
+h1 {
+    font-size: 24px;
+    margin: 20px 5px;
+}
+p {
+    font-size: 18px;
+    margin: 25px 5px;
+}
+label, #consumer-loan-select-labet {
+    margin: 5px;
+    color: #003366;
+}
+input, select {
+    padding: 5px;
+    display: block;
+    margin: 5px;
+    margin-bottom: 10px;
+    width: 171px;
+}
+select {
+    width: 185px;
+}
+button {
+    display: block;
+    margin: 5px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #003366;
+    border: 2px solid #003366;
+    color: #fff;
+    width: 185px;
+    text-align: center;
+    cursor: pointer;
+}
+#error-message {
+    margin: 5px;
+    margin-top: 20px;
+    color: #990000;
+    font-size: 20px;
+}
+table {
+    margin: 15px 5px;
+    display: none;
+}
+#issued-loan-amount, #payment {
+    margin: 10px 0px;
+    color: #0066cc;
+    font-size: 24px;
+}

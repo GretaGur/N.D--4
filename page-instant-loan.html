@@ -1,0 +1,57 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript instant loan calculator</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <div>
+    <h1>Greitoji paskola</h1>
+  </div>
+  <div>
+    <p>Paskolos dydis neturi viršyti 5000€. Maksimalus paskolos terminas 24 mėnesiai.</p>
+  </div>
+  <div id="form-instant-loan">
+    <label for="instant-loan-amount">Pageidaujama paskolos suma (100–5000€)</label>
+    <input id="instant-loan-amount" class="loan-amount" type="text">
+    <label for="instant-loan-term">Paskolos terminas (1–24 mėn.)</label>
+    <input id="instant-loan-term" class="loan-term" type="text">
+    <button id="submit-instant-loan" type="button">Skaičiuoti</button>
+  </div>
+  <div id="error-message"></div>
+  <table id="instant-loan-info">
+    <tr>
+      <td>Išduodama paskolos suma:</td>
+      <td>€
+        <span class="output" id="issued-loan-amount">
+      </td>
+    </tr>
+    <tr>
+      <td>Mėnesinė įmoka:</td>
+      <td>€
+        <span class="output" id="payment">
+      </td>
+    </tr>
+    <tr>
+      <td>Iš viso mokėti:</td>
+      <td>€
+        <span class="output" id="total">
+      </td>
+    </tr>
+    <tr>
+      <td>Palūkanos (iš viso):</td>
+      <td>€
+        <span class="output" id="totalinterest">
+      </td>
+    </tr>
+  </table>
+</body>
+
+<script src="jquery-3.2.1.min.js"></script>
+<script src="build/bundle.js"></script>
+
+</html>

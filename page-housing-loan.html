@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript housing loan calculator</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <div>
+    <h1>Būsto paskola</h1>
+  </div>
+  <div>
+    <p> Minimali paskolos suma 1000€. Maksimalus paskolos terminas 30 metų.</p>
+  </div>
+  <div id="form-housing-loan">
+    <label for="housing-loan-amount">Pageidaujama paskolos suma €</label>
+    <input id="housing-loan-amount" class="loan-amount" type="text">
+    <label for="housing-loan-term">Paskolos terminas (1–30 m.)</label>
+    <input id="housing-loan-term" class="loan-term" type="text">
+    <label for="housing-income">Grynosios mėnesio pajamos</label>
+    <input id="housing-income" class="income" type="text">
+    <label for="housing-number-of-children">Vaikų (išlaikytinių) skaičius šeimoje</label>
+    <input id="housing-number-of-children" class="number-of-children" type="text">
+    <button id="submit-housing-loan" type="button">Skaičiuoti</button>
+  </div>
+  <div id="error-message"></div>
+  <table id="housing-loan-info">
+    <tr>
+      <tr>
+        <td>Išduodama paskolos suma:</td>
+        <td>€
+          <span class="output" id="issued-loan-amount">
+        </td>
+      </tr>
+      <tr>
+        <td>Mėnesinė įmoka:</td>
+        <td>€
+          <span class="output" id="payment">
+        </td>
+      </tr>
+      <tr>
+        <td>Iš viso mokėti:</td>
+        <td>€
+          <span class="output" id="total">
+        </td>
+      </tr>
+      <tr>
+        <td>Palūkanos (iš viso):</td>
+        <td>€
+          <span class="output" id="totalinterest">
+        </td>
+      </tr>
+  </table>
+</body>
+
+<script src="jquery-3.2.1.min.js"></script>
+<script src="build/bundle.js"></script>
+
+</html>

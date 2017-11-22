@@ -1,0 +1,64 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript consumer loan calculator</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <div>
+    <h1>Vartojimo paskola</h1>
+  </div>
+  <div>
+    <p>Paskolos dydis neturi viršyti 10000€. Maksimalus paskolos terminas 5 metai (60 mėn.).</p>
+  </div>
+  <div id="form-consumer-loan">
+    <label for="consumer-loan-amount">Pageidaujama paskolos suma (100–10000€)</label>
+    <input id="consumer-loan-amount" class="loan-amount" type="text">
+    <label for="consumer-loan-term">Paskolos terminas (1–60 mėn.)</label>
+    <input id="consumer-loan-term" class="loan-term" type="text">
+    <div id="consumer-loan-select-labet">Panauda:</div>
+    <select id="consumer-loan-dropdown">
+      <option value="10">Buitinė technika</option>
+      <option value="12">Autotransporto priemonė</option>
+      <option value="8">Namams / remontui</option>
+      <option value="15">Gydimo išlaidos</option>
+    </select>
+    <button id="submit-consumer-loan" type="button">Skaičiuoti</button>
+  </div>
+  <div id="error-message"></div>
+  <table id="consumer-loan-info">
+    <tr>
+      <td>Išduodama paskolos suma:</td>
+      <td>€
+        <span class="output" id="issued-loan-amount">
+      </td>
+    </tr>
+    <tr>
+      <td>Mėnesinė įmoka:</td>
+      <td>€
+        <span class="output" id="payment">
+      </td>
+    </tr>
+    <tr>
+      <td>Iš viso mokėti:</td>
+      <td>€
+        <span class="output" id="total">
+      </td>
+    </tr>
+    <tr>
+      <td>Palūkanos (iš viso):</td>
+      <td>€
+        <span class="output" id="totalinterest">
+      </td>
+    </tr>
+  </table>
+</body>
+
+<script src="jquery-3.2.1.min.js"></script>
+<script src="build/bundle.js"></script>
+
+</html>
