@@ -1,3 +1,3 @@
 # N.D--4
 
-Nėra node ir jQuery instaliavimo failų.
+http://loan.fotopanda.lt/
