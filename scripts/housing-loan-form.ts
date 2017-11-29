@@ -1,10 +1,10 @@
-import { LionParameters } from "./loan-interface";
-import { AbstractLionCalculate } from "./loan-abstract-calculate";
+import { LoanParameters } from "./loan-interface";
+import { AbstractLoanCalculator } from "./loan-abstract-calculator-class";
 import { ValidateValue } from "./loan-input-validate";
 import { MonthlyPayment } from "./loan-monthly-payment";
 
 
-export class HousingLoanCalculate extends AbstractLionCalculate implements LionParameters {
+export class HousingLoanCalculate extends AbstractLoanCalculator implements LoanParameters {
     amount: number;
     term: number;
     isValid: boolean;
@@ -27,7 +27,7 @@ export class HousingLoanCalculate extends AbstractLionCalculate implements LionP
         if (this.getDataFromTheForm()) {
             let issuedAmount = this.issuedAmount();
             if (issuedAmount > 0) {
-                let monthlyPayment = new MonthlyPayment(issuedAmount, this.rate, this.term);
+                let monthlyPayment = new MonthlyPayment(this.formId, issuedAmount, this.rate, this.term);
                 monthlyPayment.monthlyPayment()
             } else {
                 this.displayError();
@@ -60,7 +60,7 @@ export class HousingLoanCalculate extends AbstractLionCalculate implements LionP
 
     issuedAmount() {
         let maximumMonthlyAmount = this.income - (this.minimumRequirementsCart + (this.children * this.minimumRequirementsCart / 2));
-        let monthlyPayment = new MonthlyPayment(this.amount, this.rate, this.term);
+        let monthlyPayment = new MonthlyPayment(this.formId, this.amount, this.rate, this.term);
         if ((this.amount / monthlyPayment.returnDiscountFactor()) <= maximumMonthlyAmount) {
             return this.amount;
         } else {
@@ -70,7 +70,7 @@ export class HousingLoanCalculate extends AbstractLionCalculate implements LionP
     }
 
     displayError() {
-        $(`#error-message`).text("Pagal jūsų užpildytą formą paskola nesuteikiama");
-        $(`table`).css("display", "none");
+        $(`${this.formId} .error-message`).text("Pagal jūsų užpildytą formą paskola nesuteikiama");
+        $(`${this.formId} table`).css("display", "none");
     }
 }

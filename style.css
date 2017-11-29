@@ -38,7 +38,7 @@ button {
     text-align: center;
     cursor: pointer;
 }
-#error-message {
+.error-message {
     margin: 5px;
     margin-top: 20px;
     color: #990000;
@@ -48,7 +48,7 @@ table {
     margin: 15px 5px;
     display: none;
 }
-#issued-loan-amount, #payment {
+.issued-loan-amount, .payment {
     margin: 10px 0px;
     color: #0066cc;
     font-size: 24px;

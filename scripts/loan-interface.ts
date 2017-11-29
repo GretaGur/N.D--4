@@ -1,5 +1,4 @@
-export interface LionParameters {
-    formId: string;
+export interface LoanParameters {
     amount: number;
     rate: number;
     term: number;

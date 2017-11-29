@@ -68,15 +68,15 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AbstractLionCalculate; });
-var AbstractLionCalculate = /** @class */ (function () {
-    function AbstractLionCalculate(formId, rate) {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AbstractLoanCalculator; });
+var AbstractLoanCalculator = /** @class */ (function () {
+    function AbstractLoanCalculator(formId, rate) {
         this.formId = ("#" + formId);
         this.rate = rate;
     }
-    AbstractLionCalculate.prototype.calculate = function (rate) {
+    AbstractLoanCalculator.prototype.calculate = function (rate) {
     };
-    return AbstractLionCalculate;
+    return AbstractLoanCalculator;
 }());
 
 
@@ -128,7 +128,8 @@ var ValidateValue = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MonthlyPayment; });
 var MonthlyPayment = /** @class */ (function () {
-    function MonthlyPayment(amount, rate, term) {
+    function MonthlyPayment(formId, amount, rate, term) {
+        this.formId = formId;
         this.amount = amount;
         this.rate = rate / 100 / 12;
         this.term = term * 12;
@@ -149,12 +150,12 @@ var MonthlyPayment = /** @class */ (function () {
     };
     MonthlyPayment.prototype.outputData = function () {
         if (isFinite(this.monthlyPayments)) {
-            $("table").css("display", "block");
-            $("#error-message").text("");
-            $("#issued-loan-amount").text(this.amount.toFixed(2));
-            $("#payment").text(this.monthlyPayments.toFixed(2));
-            $("#total").text((this.monthlyPayments * this.term).toFixed(2));
-            $("#totalinterest").text(((this.monthlyPayments * this.term) - this.amount).toFixed(2));
+            $(this.formId + " table").css("display", "block");
+            $(this.formId + " .error-message").text("");
+            $(this.formId + " .issued-loan-amount").text(this.amount.toFixed(2));
+            $(this.formId + " .payment").text(this.monthlyPayments.toFixed(2));
+            $(this.formId + " .total").text((this.monthlyPayments * this.term).toFixed(2));
+            $(this.formId + " .totalinterest").text(((this.monthlyPayments * this.term) - this.amount).toFixed(2));
         }
     };
     MonthlyPayment.prototype.returnDiscountFactor = function () {
@@ -199,7 +200,7 @@ $("#submit-consumer-loan").click(function () { return consumerForm.calculate(Num
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InstantLoanCalculate; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculate__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculator_class__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__loan_input_validate__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__ = __webpack_require__(2);
 var __extends = (this && this.__extends) || (function () {
@@ -227,12 +228,12 @@ var InstantLoanCalculate = /** @class */ (function (_super) {
     InstantLoanCalculate.prototype.calculate = function () {
         this.isValid = true;
         if (this.getDataFromTheForm()) {
-            var monthlyPayment = new __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__["a" /* MonthlyPayment */](this.amount, this.rate, this.term);
+            var monthlyPayment = new __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__["a" /* MonthlyPayment */](this.formId, this.amount, this.rate, this.term);
             monthlyPayment.monthlyPayment();
         }
         else {
-            $("#error-message").text("Neteisingai užpildyta forma");
-            $("table").css("display", "none");
+            $(this.formId + " .error-message").text("Neteisingai užpildyta forma");
+            $(this.formId + " table").css("display", "none");
         }
     };
     InstantLoanCalculate.prototype.getDataFromTheForm = function () {
@@ -247,12 +248,35 @@ var InstantLoanCalculate = /** @class */ (function (_super) {
     };
     InstantLoanCalculate.prototype.validateInputs = function (amount, term) {
         var validate = new __WEBPACK_IMPORTED_MODULE_1__loan_input_validate__["a" /* ValidateValue */]();
-        (validate.validateInput(amount, "number", 100, 5000)) ? (this.amount = amount) : this.isValid = false;
-        (validate.validateInput(term, "number", 1, 24)) ? (this.term = (term / 12)) : this.isValid = false;
+        if (validate.validateInput(amount, "number", 100, 5000)) {
+            this.amount = amount;
+            this.clearError($(this.formId + " .loan-amount"));
+        }
+        else {
+            this.isValid = false;
+            this.displayError($(this.formId + " .loan-amount"));
+        }
+        if (validate.validateInput(term, "number", 1, 24)) {
+            this.term = (term / 12);
+            this.clearError($(this.formId + " .loan-term"));
+        }
+        else {
+            this.isValid = false;
+            this.displayError($(this.formId + " .loan-term"));
+        }
         return this.isValid;
     };
+    InstantLoanCalculate.prototype.clearError = function (inputId) {
+        $(inputId).css('border-color', 'initial');
+    };
+    InstantLoanCalculate.prototype.displayError = function (inputId) {
+        console.log(this.formId + " table");
+        console.log(inputId);
+        $(inputId).css('border-color', 'red');
+        $(this.formId + " table").css("display", "none");
+    };
     return InstantLoanCalculate;
-}(__WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculate__["a" /* AbstractLionCalculate */]));
+}(__WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculator_class__["a" /* AbstractLoanCalculator */]));
 
 
 
@@ -262,7 +286,7 @@ var InstantLoanCalculate = /** @class */ (function (_super) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HousingLoanCalculate; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculate__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculator_class__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__loan_input_validate__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__ = __webpack_require__(2);
 var __extends = (this && this.__extends) || (function () {
@@ -295,7 +319,7 @@ var HousingLoanCalculate = /** @class */ (function (_super) {
         if (this.getDataFromTheForm()) {
             var issuedAmount = this.issuedAmount();
             if (issuedAmount > 0) {
-                var monthlyPayment = new __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__["a" /* MonthlyPayment */](issuedAmount, this.rate, this.term);
+                var monthlyPayment = new __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__["a" /* MonthlyPayment */](this.formId, issuedAmount, this.rate, this.term);
                 monthlyPayment.monthlyPayment();
             }
             else {
@@ -328,7 +352,7 @@ var HousingLoanCalculate = /** @class */ (function (_super) {
     };
     HousingLoanCalculate.prototype.issuedAmount = function () {
         var maximumMonthlyAmount = this.income - (this.minimumRequirementsCart + (this.children * this.minimumRequirementsCart / 2));
-        var monthlyPayment = new __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__["a" /* MonthlyPayment */](this.amount, this.rate, this.term);
+        var monthlyPayment = new __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__["a" /* MonthlyPayment */](this.formId, this.amount, this.rate, this.term);
         if ((this.amount / monthlyPayment.returnDiscountFactor()) <= maximumMonthlyAmount) {
             return this.amount;
         }
@@ -338,11 +362,11 @@ var HousingLoanCalculate = /** @class */ (function (_super) {
         }
     };
     HousingLoanCalculate.prototype.displayError = function () {
-        $("#error-message").text("Pagal jūsų užpildytą formą paskola nesuteikiama");
-        $("table").css("display", "none");
+        $(this.formId + " .error-message").text("Pagal jūsų užpildytą formą paskola nesuteikiama");
+        $(this.formId + " table").css("display", "none");
     };
     return HousingLoanCalculate;
-}(__WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculate__["a" /* AbstractLionCalculate */]));
+}(__WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculator_class__["a" /* AbstractLoanCalculator */]));
 
 
 
@@ -352,7 +376,7 @@ var HousingLoanCalculate = /** @class */ (function (_super) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConsumerLoanCalculate; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculate__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculator_class__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__loan_input_validate__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__ = __webpack_require__(2);
 var __extends = (this && this.__extends) || (function () {
@@ -381,12 +405,12 @@ var ConsumerLoanCalculate = /** @class */ (function (_super) {
         this.rate = rate;
         this.isValid = true;
         if (this.getDataFromTheForm()) {
-            var monthlyPayment = new __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__["a" /* MonthlyPayment */](this.amount, this.rate, this.term);
+            var monthlyPayment = new __WEBPACK_IMPORTED_MODULE_2__loan_monthly_payment__["a" /* MonthlyPayment */](this.formId, this.amount, this.rate, this.term);
             monthlyPayment.monthlyPayment();
         }
         else {
-            $("#error-message").text("Neteisingai užpildyta forma");
-            $("table").css("display", "none");
+            $(this.formId + " .error-message").text("Neteisingai užpildyta forma");
+            $(this.formId + " table").css("display", "none");
         }
     };
     ConsumerLoanCalculate.prototype.getDataFromTheForm = function () {
@@ -406,7 +430,7 @@ var ConsumerLoanCalculate = /** @class */ (function (_super) {
         return this.isValid;
     };
     return ConsumerLoanCalculate;
-}(__WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculate__["a" /* AbstractLionCalculate */]));
+}(__WEBPACK_IMPORTED_MODULE_0__loan_abstract_calculator_class__["a" /* AbstractLoanCalculator */]));
 
 
 

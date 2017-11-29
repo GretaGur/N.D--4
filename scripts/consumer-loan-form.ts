@@ -1,10 +1,10 @@
-import { LionParameters } from "./loan-interface";
-import { AbstractLionCalculate } from "./loan-abstract-calculate";
+import { LoanParameters } from "./loan-interface";
+import { AbstractLoanCalculator } from "./loan-abstract-calculator-class";
 import { ValidateValue } from "./loan-input-validate";
 import { MonthlyPayment } from "./loan-monthly-payment";
 
 
-export class ConsumerLoanCalculate extends AbstractLionCalculate implements LionParameters  {
+export class ConsumerLoanCalculate extends AbstractLoanCalculator implements LoanParameters  {
     amount: number;
     term: number;
     isValid: boolean;
@@ -20,11 +20,11 @@ export class ConsumerLoanCalculate extends AbstractLionCalculate implements Lion
         this.rate = rate;
         this.isValid = true;
         if (this.getDataFromTheForm()) {
-            let monthlyPayment = new MonthlyPayment(this.amount, this.rate, this.term);
+            let monthlyPayment = new MonthlyPayment(this.formId, this.amount, this.rate, this.term);
             monthlyPayment.monthlyPayment()
         } else {
-            $(`#error-message`).text("Neteisingai užpildyta forma");
-            $(`table`).css("display", "none");
+            $(`${this.formId} .error-message`).text("Neteisingai užpildyta forma");
+            $(`${this.formId} table`).css("display", "none");
         }
     }
 
