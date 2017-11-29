@@ -270,8 +270,6 @@ var InstantLoanCalculate = /** @class */ (function (_super) {
         $(inputId).css('border-color', 'initial');
     };
     InstantLoanCalculate.prototype.displayError = function (inputId) {
-        console.log(this.formId + " table");
-        console.log(inputId);
         $(inputId).css('border-color', 'red');
         $(this.formId + " table").css("display", "none");
     };

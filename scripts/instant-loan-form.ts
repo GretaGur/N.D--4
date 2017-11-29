@@ -61,8 +61,6 @@ export class InstantLoanCalculate extends AbstractLoanCalculator implements Loan
     }
 
     displayError(inputId: JQuery<HTMLElement>) {
-        console.log(`${this.formId} table`);
-        console.log(inputId);
         $(inputId).css('border-color', 'red');
         $(`${this.formId} table`).css("display", "none");
     }
